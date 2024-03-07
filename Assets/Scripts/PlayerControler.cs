@@ -25,20 +25,29 @@ public class PlayerControler : MonoBehaviour
     void Update()
     {
         //Esta linea sirve para mover el player     
-        _direction = new Vector3(Input.GetAxis("Horizontal"),_direction.y, Input.GetAxis("Vertical"));
+        _direction = new Vector3(Input.GetAxis("Horizontal"), _direction.y, Input.GetAxis("Vertical"));
 
-        var PlayerAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, PlayerAngle, 0);
-        
+        //var PlayerAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
+        //transform.rotation = Quaternion.Euler(0, PlayerAngle, 0);
+
         _charactercontroller.Move(_direction * Time.deltaTime * PlayerSpeed);
-            
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A))
+
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A))
         {
             _Animator.SetFloat("MovX", 1);
         }
-        else 
+        else if (Input.GetKey(KeyCode.W))
+        {
+            _Animator.SetFloat("Movz", 1);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            _Animator.SetFloat("Movz", -1);                     
+        }
+        else
         {
             _Animator.SetFloat("MovX", 0);
+            _Animator.SetFloat("Movz", 0);
         }
 
         if (Input.GetKey(KeyCode.F))
